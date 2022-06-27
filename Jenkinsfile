@@ -16,6 +16,15 @@ pipeline {
                 }
             }
         }
+
+        stage('Test') {
+            steps{
+                script{
+                    sh 'docker image ls'
+                }
+            }
+        }
+
         /*
         stage('Push image') {
             steps { 
