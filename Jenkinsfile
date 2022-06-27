@@ -25,10 +25,9 @@ pipeline {
             }    
         }
         stage('Push image') {
-            docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {            
-                app.push("${env.BUILD_NUMBER}")            
-                app.push("latest")        
-            }    
-           }
+            docker.withRegistry('https://hub.docker.com/repository/docker/matteocucchi/test-app', 'doockerhub') {
+                app.push()
+            }
+        }
     }
 }
