@@ -20,7 +20,7 @@ pipeline {
         stage('Test') {
             steps{
                 script{
-                    sh 'docker image ls'
+                    sh 'echo bella'
                 }
             }
         }
