@@ -23,14 +23,15 @@ pipeline {
         stage('Login') {
 
 			steps {
-				bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                bat 'echo $DOCKERHUB_CREDENTIALS_USR $DOCKERHUB_CREDENTIALS_PSW'
+				//bat 'docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW'
 			}
 		}
 
 		stage('Push') {
 
 			steps {
-				bat 'docker push bharathirajatut/nodeapp:latest'
+				bat 'docker push test-app:latest'
 			}
 		}
 	}
