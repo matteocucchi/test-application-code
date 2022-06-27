@@ -1,9 +1,8 @@
 # syntax=docker/dockerfile:1
-FROM openjdk
+FROM python
 WORKDIR /app
-COPY Application.java Application.java
-RUN javac Application.java
+RUN pip3 install Flask
 
 COPY . .
 
-# CMD ["java", "Application"]
+# CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
