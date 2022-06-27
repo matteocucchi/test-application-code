@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment{
         DOCKERHUB_CREDENTIAL=credentials('dockerhub')
+        image_version=1.0
     }
     stages {
          stage('Clone repository') { 
@@ -28,8 +29,8 @@ pipeline {
 
 		stage('Push') {
 			steps {
-                bat 'docker tag test-app:latest '+DOCKERHUB_CREDENTIAL_USR+'/test-app:latest'
-				bat 'docker push '+DOCKERHUB_CREDENTIAL_USR+'/test-app:latest'
+                bat 'docker tag test-app:latest '+DOCKERHUB_CREDENTIAL_USR+'/test-app:'+image_version
+				bat 'docker push '+DOCKERHUB_CREDENTIAL_USR+'/test-app:'+image_version
 			}
 		}
 	}
