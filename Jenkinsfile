@@ -31,7 +31,7 @@ pipeline {
         stage('Push image') {
             steps { 
                 script{
-                    docker.withRegistry('https://hub.docker.com/repository/docker/matteocucchi/test-app', 'doockerhub') {
+                    docker.withRegistry('https://hub.docker.com/repository/docker/matteocucchi/test-app', 'dockerhub') {
                         app.push()
                     }
                 }
