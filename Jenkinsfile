@@ -21,9 +21,8 @@ pipeline {
         }
 
         stage('Login') {
-
 			steps {
-				bat 'echo ${DOCKERHUB_CREDENTIAL}'
+				echo DOCKERHUB_CREDENTIAL_USR
                 sh 'echo ${DOCKERHUB_CREDENTIAL}'
                 
 			}
