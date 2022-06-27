@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        dockerhub = credentials('dockerhub')
+    }
     stages {
          stage('Clone repository') { 
             steps { 
@@ -17,24 +20,24 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps{
-                script{
-                    bat 'docker image ls'
-                }
-            }
-        }
+        stage('Login') {
 
-        /*
-        stage('Push image') {
-            steps { 
-                script{
-                    docker.withRegistry('https://hub.docker.com', 'dockerhub') {
-                        app.push()
-                    }
-                }
-            }
-        }
-        */
-    }
+			steps {
+				bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
+
+		stage('Push') {
+
+			steps {
+				bat 'docker push bharathirajatut/nodeapp:latest'
+			}
+		}
+	}
+
+	post {
+		always {
+			bat 'docker logout'
+		}
+	}
 }
