@@ -24,7 +24,7 @@ pipeline {
 			steps {
 				echo DOCKERHUB_CREDENTIAL_USR
                 echo DOCKERHUB_CREDENTIAL_PSW
-                bat 'docker login -u DOCKERHUB_CREDENTIAL_USR -p DOCKERHUB_CREDENTIAL_PSW'                
+                bat 'docker login -u '+DOCKERHUB_CREDENTIAL_USR+' -p '+DOCKERHUB_CREDENTIAL_PSW               
 			}
 		}
 /*
