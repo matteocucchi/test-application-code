@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment{
+        DOCKERHUB_CREDENTIAL=credentials('dockerhub')
+    }
     stages {
          stage('Clone repository') { 
             steps { 
@@ -20,7 +23,7 @@ pipeline {
         stage('Login') {
 
 			steps {
-                bat 'echo '+credentials('dockerhub')
+                echo $DOCKERHUB_CREDENTIAL
 				//bat 'docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW'
 			}
 		}
