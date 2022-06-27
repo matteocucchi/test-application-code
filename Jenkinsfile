@@ -31,8 +31,8 @@ pipeline {
 			steps {
 				bat 'docker push test-app:latest'
 			}
-		}
-	}*/
+		}*/
+	}
 
 	post {
 		always {
