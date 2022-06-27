@@ -23,7 +23,7 @@ pipeline {
         stage('Login') {
 
 			steps {
-				bat 'docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}'
+				bat 'echo $DOCKERHUB_CREDENTIAL'
 			}
 		}
 /*
@@ -31,8 +31,8 @@ pipeline {
 			steps {
 				bat 'docker push test-app:latest'
 			}
-		}*/
-	}
+		}
+	}*/
 
 	post {
 		always {
