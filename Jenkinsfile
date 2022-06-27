@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment{
         DOCKERHUB_CREDENTIAL=credentials('dockerhub')
-        image_version=latest
+        image_version='latest'
     }
     stages {
          stage('Clone repository') { 
