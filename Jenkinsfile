@@ -23,7 +23,7 @@ pipeline {
         stage('Login') {
 
 			steps {
-				bat 'echo $DOCKERHUB_CREDENTIAL'
+				bat 'echo $DOCKERHUB_CREDENTIAL_USR $DOCKERHUB_CREDENTIAL_PSW'
 			}
 		}
 /*
