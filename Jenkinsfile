@@ -28,7 +28,7 @@ pipeline {
 
 		stage('Push') {
 			steps {
-				bat 'docker push test-app:latest'
+				bat 'docker push '+DOCKERHUB_CREDENTIAL_USR+'/test-app:latest'
 			}
 		}
 	}
