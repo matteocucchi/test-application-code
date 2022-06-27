@@ -19,14 +19,22 @@ pipeline {
                 }
             }
         }
-        stage('Test image') {           
-            app.inside {            
-             sh 'echo "Tests passed"'        
+        stage('Test image') {    
+            steps { 
+                script{       
+                    app.inside {            
+                    sh 'echo "Tests passed"'        
+                    }
+                }
             }    
         }
         stage('Push image') {
-            docker.withRegistry('https://hub.docker.com/repository/docker/matteocucchi/test-app', 'doockerhub') {
-                app.push()
+            steps { 
+                script{
+                    docker.withRegistry('https://hub.docker.com/repository/docker/matteocucchi/test-app', 'doockerhub') {
+                        app.push()
+                    }
+                }
             }
         }
     }
