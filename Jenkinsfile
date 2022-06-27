@@ -1,40 +1,31 @@
-pipeline{
+pipeline {
+    agent any
+    stages {
+         stage('Clone repository') { 
+            steps { 
+                script{
+                    checkout scm
+                }
+            }
+        }
 
-	agent any
-
-	environment {
-		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
-	}
-
-	stages {
-
-		stage('Build') {
-
-			steps {
-				sh 'docker build -t test-app:latest .'
-			}
-		}
-/*
-		stage('Login') {
-
-			steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-			}
-		}
-
-		stage('Push') {
-
-			steps {
-				sh 'docker push test-app:latest'
-			}
-		}
+        stage('Build') { 
+            steps { 
+                script{
+                 app = docker.build("test-app")
+                }
+            }
+        }
+        /*
+        stage('Push image') {
+            steps { 
+                script{
+                    docker.withRegistry('https://hub.docker.com', 'dockerhub') {
+                        app.push()
+                    }
+                }
+            }
+        }
         */
-	}
-
-	post {
-		always {
-			sh 'docker logout'
-		}
-	}
-
+    }
 }
