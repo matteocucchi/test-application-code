@@ -6,4 +6,4 @@ RUN javac Application.java
 
 COPY . .
 
-CMD ["java", "Application"]
+# CMD ["java", "Application"]
