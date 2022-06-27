@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-        dockerhub = credentials('dockerhub')
-    }
+		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+	}
     stages {
          stage('Clone repository') { 
             steps { 
@@ -23,13 +23,11 @@ pipeline {
         stage('Login') {
 
 			steps {
-                bat 'echo $dockerhub_USR $dockerhub_PSW'
-				//bat 'docker login -u $dockerhub_USR -p $dockerhub_PSW'
+				bat 'docker login -u $dockerhub_USR -p $dockerhub_PSW'
 			}
 		}
 
 		stage('Push') {
-
 			steps {
 				bat 'docker push test-app:latest'
 			}
