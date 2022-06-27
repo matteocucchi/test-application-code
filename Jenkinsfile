@@ -1,32 +1,39 @@
-pipeline {
-    agent any
-    options {
-        skipStagesAfterUnstable()
-    }
-    stages {
-         stage('Clone repository') { 
-            steps { 
-                script{
-                checkout scm
-                }
-            }
-        }
+pipeline{
 
-        stage('Build') { 
-            steps { 
-                script{
-                 app = docker.build("test-app")
-                }
-            }
-        }
-        stage('Push image') {
-            steps { 
-                script{
-                    docker.withRegistry('https://hub.docker.com', 'dockerhub') {
-                        app.push()
-                    }
-                }
-            }
-        }
-    }
+	agent any
+
+	environment {
+		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+	}
+
+	stages {
+
+		stage('Build') {
+
+			steps {
+				sh 'docker build -t test-app:latest .'
+			}
+		}
+
+		stage('Login') {
+
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
+
+		stage('Push') {
+
+			steps {
+				sh 'docker push test-app:latest'
+			}
+		}
+	}
+
+	post {
+		always {
+			sh 'docker logout'
+		}
+	}
+
 }
