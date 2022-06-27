@@ -22,7 +22,7 @@ pipeline {
         stage('Push image') {
             steps { 
                 script{
-                    docker.withRegistry('https://hub.docker.com/repository/docker/matteocucchi/test-app', 'dockerhub') {
+                    docker.withRegistry('https://hub.docker.com', 'dockerhub') {
                         app.push()
                     }
                 }
