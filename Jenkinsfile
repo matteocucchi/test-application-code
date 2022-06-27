@@ -14,7 +14,7 @@ pipeline{
 				sh 'docker build -t test-app:latest .'
 			}
 		}
-
+/*
 		stage('Login') {
 
 			steps {
@@ -28,6 +28,7 @@ pipeline{
 				sh 'docker push test-app:latest'
 			}
 		}
+        */
 	}
 
 	post {
