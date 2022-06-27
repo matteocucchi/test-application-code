@@ -20,7 +20,7 @@ pipeline {
         stage('Test') {
             steps{
                 script{
-                    sh 'echo bella'
+                    bat 'echo bella'
                 }
             }
         }
