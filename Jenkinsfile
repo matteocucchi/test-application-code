@@ -23,7 +23,6 @@ pipeline {
         stage('Login') {
 			steps {
 				echo DOCKERHUB_CREDENTIAL_USR
-                sh 'echo ${DOCKERHUB_CREDENTIAL}'
                 
 			}
 		}
