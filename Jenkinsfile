@@ -14,6 +14,7 @@ pipeline {
         stage('Clone conf repository') { 
             steps { 
                 script{
+                    powershell "rm -r test-application"
                     powershell "git clone https://github.com/matteocucchi/test-application.git"
                 }
             }
