@@ -54,7 +54,7 @@ pipeline {
         stage('Version Update'){
             steps{
                 script{
-                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    /*catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         withCredentials([usernamePassword(credentialsId: 'git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                             def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
                             powershell "git config user.email matteo.cucchi98@gmail.com"
@@ -63,6 +63,11 @@ pipeline {
                             powershell "git commit -m '"+env.VERSIONE_OLD+"-->"+env.VERSIONE_NEW+"'"
                             powershell "git push https://${GIT_USERNAME}:${encodedPassword}@github.com/${GIT_USERNAME}/test-application.git HEAD:main"
                         }
+                    }*/
+                    dir ('test-application') {
+                        powershell "git add ."
+                        powershell "git commit -m '"+env.VERSIONE_OLD+"-->"+env.VERSIONE_NEW+"'"
+                        powershell "git push origin HEAD:main"
                     }
                 }
             }
