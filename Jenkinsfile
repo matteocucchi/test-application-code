@@ -67,13 +67,9 @@ pipeline {
                     
                     dir ('test-application') {
                         powershell "echo ((gc dev/deployment.yaml) -replace '"+VERSIONE_OLD+"', '"+VERSIONE_NEW+"') > dev/deployment.yaml"
-                        powershell "ls"
-                        powershell "cat dev/deployment.yaml"
-                        /*
                         powershell "git add ."
                         powershell "git commit -m '"+env.VERSIONE_OLD+"-->"+env.VERSIONE_NEW+"'"
                         powershell "git push origin HEAD:main"
-                        */
                     }
                 }
             }
