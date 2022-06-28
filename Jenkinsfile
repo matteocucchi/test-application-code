@@ -52,9 +52,9 @@ pipeline {
             steps{
                 script {
                     powershell "echo ((gc test-application/dev/deployment.yaml) -replace '"+VERSIONE_OLD+"', '"+VERSIONE_NEW+"') > test-application/dev/deployment.yaml"
-                    powershell "git add test-application/dev/deployment.yaml"
+                    powershell "git add test-application/"
                     powershell "git commit -m '"+VERSIONE_OLD+"-->"+VERSIONE_NEW+"'"
-                    powershell "git push origin HEAD:main"
+                    powershell "git push --repo='https://github.com/matteocucchi/test-application.git' origin HEAD:main"
                 }
             }
         }
