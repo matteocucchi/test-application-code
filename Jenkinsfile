@@ -5,6 +5,9 @@ pipeline {
     }
     stages {
         stage('Clone repository') { 
+            when {
+                not { changeset pattern: "dev/deployment.yaml" }
+            }
             steps { 
                 script{
                     checkout scm
