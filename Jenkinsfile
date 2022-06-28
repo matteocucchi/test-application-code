@@ -4,9 +4,6 @@ pipeline {}
         DOCKERHUB_CREDENTIAL=credentials('dockerhub')
     }
     stages {
-        when {
-            not { changeset pattern: "dev/deployment.yaml" }
-        }
         stage('Clone repository') { 
             steps { 
                 script{
