@@ -64,7 +64,9 @@ pipeline {
                             powershell "git push https://${GIT_USERNAME}:${encodedPassword}@github.com/${GIT_USERNAME}/test-application.git HEAD:main"
                         }
                     }*/
+                    
                     dir ('test-application') {
+                        powershell "echo ((gc dev/deployment.yaml) -replace '"+VERSIONE_OLD+"', '"+VERSIONE_NEW+"') > dev/deployment.yaml"
                         powershell "ls"
                         powershell "cat dev/deployment.yaml"
                         /*
