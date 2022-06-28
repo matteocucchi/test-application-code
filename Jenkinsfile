@@ -1,13 +1,13 @@
 pipeline {
+    when {
+        not { changeset pattern: "dev/deployment.yaml" }
+    }
     agent any
     environment{
         DOCKERHUB_CREDENTIAL=credentials('dockerhub')
     }
     stages {
         stage('Clone repository') { 
-            when {
-                not { changeset pattern: "dev/deployment.yaml" }
-            }
             steps { 
                 script{
                     checkout scm
