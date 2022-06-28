@@ -16,7 +16,7 @@ pipeline {
             steps{
                 script{
                     env.VERSIONE_OLD = powershell(script:"((gc dev/deployment.yaml | findstr '        image: matteocucchi/test-app:') -replace '        image: matteocucchi/test-app:', '')", returnStdout: true).trim()
-                    env.VERSIONE_NEW = powershell(script:"[string]([double]((gc dev/deployment.yaml | findstr '        image: matteocucchi/test-app:') -replace 'version=', '') + 0.1)", returnStdout: true).trim()
+                    env.VERSIONE_NEW = powershell(script:"[string]([double]((gc dev/deployment.yaml | findstr '        image: matteocucchi/test-app:') -replace '        image: matteocucchi/test-app:', '') + 0.1)", returnStdout: true).trim()
                 }
             }
         }
