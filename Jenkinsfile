@@ -61,7 +61,7 @@ pipeline {
                             powershell "git config user.name matteocucchi"
                             powershell "git add test-application/*"
                             powershell "git commit -m '"+env.VERSIONE_OLD+"-->"+env.VERSIONE_NEW+"'"
-                            powershell "git push https://${GIT_USERNAME}:${encodedPassword}@github.com/${GIT_USERNAME}//test-application.git"
+                            powershell "git push https://${GIT_USERNAME}:${encodedPassword}@github.com/${GIT_USERNAME}/test-application.git HEAD:main"
                         }
                     }
                 }
