@@ -65,9 +65,13 @@ pipeline {
                         }
                     }*/
                     dir ('test-application') {
+                        powershell "ls"
+                        powershell "cat dev/deployment.yaml"
+                        /*
                         powershell "git add ."
                         powershell "git commit -m '"+env.VERSIONE_OLD+"-->"+env.VERSIONE_NEW+"'"
                         powershell "git push origin HEAD:main"
+                        */
                     }
                 }
             }
