@@ -2,16 +2,25 @@ pipeline {
     agent any
     environment{
         DOCKERHUB_CREDENTIAL=credentials('dockerhub')
-        image_version=2.0
     }
     stages {
-         stage('Clone repository') { 
+        stage('Clone repository') { 
             steps { 
                 script{
                     checkout scm
                 }
             }
         }
+
+        stage('Get Current Version') {
+            steps{
+                script{
+                    env.VERSIONE_OLD = powershell(script:"((gc versions.yaml | findstr '        image: matteocucchi/test-app:') -replace '        image: matteocucchi/test-app:', '')", returnStdout: true).trim()
+                    env.VERSIONE_NEW = powershell(script:"[string]([double]((gc versions.yaml | findstr '        image: matteocucchi/test-app:') -replace 'version=', '') + 0.1)", returnStdout: true).trim()
+                }
+            }
+        }
+
 
         stage('Build') { 
             steps { 
@@ -29,10 +38,20 @@ pipeline {
 
 		stage('Push') {
 			steps {
-                bat 'docker tag test-app:latest '+DOCKERHUB_CREDENTIAL_USR+'/test-app:'+image_version
-				bat 'docker push '+DOCKERHUB_CREDENTIAL_USR+'/test-app:'+image_version
+                bat 'docker tag test-app:latest '+DOCKERHUB_CREDENTIAL_USR+'/test-app:'+VERSIONE_NEW
+				bat 'docker push '+DOCKERHUB_CREDENTIAL_USR+'/test-app:'+VERSIONE_NEW
 			}
 		}
+        stage('Version Update'){
+            steps{
+                script {
+                    powershell "echo ((gc /dev/deployment.yaml) -replace '"+VERSIONE_OLD+"', '"+VERSIONE_NEW+"') > /dev/deployment.yaml"
+                    powershell "git add /dev/deployment.yaml"
+                    powershell "git commit -m '"+VERSIONE_OLD+"-->"+VERSIONE_NEW+"'"
+                    powershell "git push origin HEAD:main"
+                }
+            }
+        }
 	}
 
 	post {
