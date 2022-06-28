@@ -53,11 +53,17 @@ pipeline {
 		}
         stage('Version Update'){
             steps{
-                script {
-                    powershell "echo ((gc test-application/dev/deployment.yaml) -replace '"+VERSIONE_OLD+"', '"+VERSIONE_NEW+"') > test-application/dev/deployment.yaml"
-                    powershell "git add test-application/"
-                    powershell "git commit -m '"+VERSIONE_OLD+"-->"+VERSIONE_NEW+"'"
-                    powershell "git push --repo='https://github.com/matteocucchi/test-application.git' origin HEAD:main"
+                script{
+                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        withCredentials([usernamePassword(credentialsId: 'git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                            def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
+                            powershell "git config user.email matteo.cucchi98@gmail.com"
+                            powershell "git config user.name matteocucchi"
+                            powershell "git add test-application/*"
+                            powershell "git commit -m '"+env.VERSIONE_OLD+"-->"+env.VERSIONE_NEW+"'"
+                            powershell "git push https://${GIT_USERNAME}:${encodedPassword}@github.com/${GIT_USERNAME}//test-application.git"
+                        }
+                    }
                 }
             }
         }
