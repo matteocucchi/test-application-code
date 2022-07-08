@@ -29,16 +29,8 @@ pipeline {
                     env.VERSIONE_NEW = sh(script:"expr "+env.VERSIONE_OLD+" + 1", returnStdout: true).trim()
                 }
             }
-        }
+        }        
 
-        stage('docker test') {
-            steps{
-                sh "docker --version"
-            }
-        }
-
-        
-/*
         stage('Build') { 
             steps { 
                 script{
@@ -71,7 +63,7 @@ pipeline {
                 }
             }
         }
-*/
+
 	}
 	post {
 		always {
