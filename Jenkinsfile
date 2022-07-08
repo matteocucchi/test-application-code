@@ -27,7 +27,6 @@ pipeline {
                 script{
                     env.VERSIONE_OLD = sh(script:"grep 'image: matteocucchi/test-app:' test-application/dev/deployment.yaml | sed 's*        image: matteocucchi/test-app:**'", returnStdout: true).trim()
                     env.VERSIONE_NEW = sh(script:"expr "+env.VERSIONE_OLD+" + 1", returnStdout: true).trim()
-                    sh "echo "+env.VERSIONE_OLD+" "+env.VERSIONE_NEW
                 }
             }
         }
