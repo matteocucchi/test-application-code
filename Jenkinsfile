@@ -25,8 +25,9 @@ pipeline {
         stage('Get Current Version') {
             steps{
                 script{
-                    env.VERSIONE_OLD = shell(script:"((gc test-application/dev/deployment.yaml | findstr '        image: matteocucchi/test-app:') -replace '        image: matteocucchi/test-app:', '')", returnStdout: true).trim()
-                    env.VERSIONE_NEW = shell(script:"[string]([double]((gc test-application/dev/deployment.yaml | findstr '        image: matteocucchi/test-app:') -replace '        image: matteocucchi/test-app:', '') + 0.1)", returnStdout: true).trim()
+                    env.VERSIONE_OLD = shell(script:"grep 'image: matteocucchi/test-app:' test-application/dev/deployment.yaml | sed 's*        image: matteocucchi/test-app:**'", returnStdout: true).trim()
+                    env.VERSIONE_NEW = shell(script:"echo '"+env.VERSIONE_OLD+" + 0.1' | bc", returnStdout: true).trim()
+                    shell "echo "+env.VERSIONE_OLD+" "+env.VERSIONE_NEW                    
                 }
             }
         }
@@ -41,14 +42,14 @@ pipeline {
 
         stage('Login') {
 			steps {
-                bat 'docker login -u '+DOCKERHUB_CREDENTIAL_USR+' -p '+DOCKERHUB_CREDENTIAL_PSW               
+                shell 'docker login -u '+DOCKERHUB_CREDENTIAL_USR+' -p '+DOCKERHUB_CREDENTIAL_PSW               
 			}
 		}
 
 		stage('Push') {
 			steps {
-                bat 'docker tag test-app:latest '+DOCKERHUB_CREDENTIAL_USR+'/test-app:'+VERSIONE_NEW
-				bat 'docker push '+DOCKERHUB_CREDENTIAL_USR+'/test-app:'+VERSIONE_NEW
+                shell 'docker tag test-app:latest '+DOCKERHUB_CREDENTIAL_USR+'/test-app:'+VERSIONE_NEW
+				shell 'docker push '+DOCKERHUB_CREDENTIAL_USR+'/test-app:'+VERSIONE_NEW
 			}
 		}
         stage('Version Update'){
