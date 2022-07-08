@@ -31,6 +31,14 @@ pipeline {
             }
         }
 
+        stage('docker test') {
+            steps{
+                sh "docker --version"
+            }
+        }
+
+        
+/*
         stage('Build') { 
             steps { 
                 script{
@@ -63,7 +71,7 @@ pipeline {
                 }
             }
         }
-
+*/
 	}
 	post {
 		always {
