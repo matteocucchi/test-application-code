@@ -26,13 +26,13 @@ pipeline {
             steps{
                 script{
                     env.VERSIONE_OLD = sh(script:"grep 'image: matteocucchi/test-app:' test-application/dev/deployment.yaml | sed 's*        image: matteocucchi/test-app:**'", returnStdout: true).trim()
-                    //env.VERSIONE_NEW = shell(script:"echo '"+env.VERSIONE_OLD+" + 0.1' | bc", returnStdout: true).trim()
-                    //shell "echo "+env.VERSIONE_OLD+" "+env.VERSIONE_NEW            
+                    env.VERSIONE_NEW = sh(script:"echo '"+env.VERSIONE_OLD+" + 0.1' | bc", returnStdout: true).trim()
+                    sh "echo "+env.VERSIONE_OLD+" "+env.VERSIONE_NEW            
                     sh "echo "+env.VERSIONE_OLD        
                 }
             }
         }
-/*
+
         stage('Build') { 
             steps { 
                 script{
@@ -43,33 +43,33 @@ pipeline {
 
         stage('Login') {
 			steps {
-                shell 'docker login -u '+DOCKERHUB_CREDENTIAL_USR+' -p '+DOCKERHUB_CREDENTIAL_PSW               
+                sh 'docker login -u '+DOCKERHUB_CREDENTIAL_USR+' -p '+DOCKERHUB_CREDENTIAL_PSW               
 			}
 		}
 
 		stage('Push') {
 			steps {
-                shell 'docker tag test-app:latest '+DOCKERHUB_CREDENTIAL_USR+'/test-app:'+VERSIONE_NEW
-				shell 'docker push '+DOCKERHUB_CREDENTIAL_USR+'/test-app:'+VERSIONE_NEW
+                sh 'docker tag test-app:latest '+DOCKERHUB_CREDENTIAL_USR+'/test-app:'+VERSIONE_NEW
+				sh 'docker push '+DOCKERHUB_CREDENTIAL_USR+'/test-app:'+VERSIONE_NEW
 			}
 		}
         stage('Version Update'){
             steps{
                 script{                    
                     dir ('test-application') {
-                        shell "echo ((gc dev/deployment.yaml) -replace '"+VERSIONE_OLD+"', '"+VERSIONE_NEW+"') > dev/deployment.yaml"
-                        shell "git add ."
-                        shell "git commit -m '"+env.VERSIONE_OLD+"-->"+env.VERSIONE_NEW+"'"
-                        shell "git push origin HEAD:main"
+                        sh "echo ((gc dev/deployment.yaml) -replace '"+VERSIONE_OLD+"', '"+VERSIONE_NEW+"') > dev/deployment.yaml"
+                        sh "git add ."
+                        sh "git commit -m '"+env.VERSIONE_OLD+"-->"+env.VERSIONE_NEW+"'"
+                        sh "git push origin HEAD:main"
                     }
                 }
             }
         }
-*/
+
 	}
 	post {
 		always {
-			shell 'docker logout'
+			sh 'docker logout'
 		}
 	}
 }
