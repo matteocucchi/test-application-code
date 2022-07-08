@@ -17,7 +17,7 @@ pipeline {
                     dir ('test-application') {
                         deleteDir()
                     }
-                    shell "git clone https://github.com/matteocucchi/test-application.git"
+                    sh "git clone https://github.com/matteocucchi/test-application.git"
                 }
             }
         }        
@@ -25,10 +25,10 @@ pipeline {
         stage('Get Current Version') {
             steps{
                 script{
-                    env.VERSIONE_OLD = shell(script:"grep 'image: matteocucchi/test-app:' test-application/dev/deployment.yaml | sed 's*        image: matteocucchi/test-app:**'", returnStdout: true).trim()
+                    env.VERSIONE_OLD = sh(script:"grep 'image: matteocucchi/test-app:' test-application/dev/deployment.yaml | sed 's*        image: matteocucchi/test-app:**'", returnStdout: true).trim()
                     //env.VERSIONE_NEW = shell(script:"echo '"+env.VERSIONE_OLD+" + 0.1' | bc", returnStdout: true).trim()
                     //shell "echo "+env.VERSIONE_OLD+" "+env.VERSIONE_NEW            
-                    shell "echo "+env.VERSIONE_OLD        
+                    sh "echo "+env.VERSIONE_OLD        
                 }
             }
         }
