@@ -17,7 +17,7 @@ pipeline {
                     dir ('test-application') {
                         deleteDir()
                     }
-                    powershell "git clone https://github.com/matteocucchi/test-application.git"
+                    shell "git clone https://github.com/matteocucchi/test-application.git"
                 }
             }
         }        
@@ -25,8 +25,8 @@ pipeline {
         stage('Get Current Version') {
             steps{
                 script{
-                    env.VERSIONE_OLD = powershell(script:"((gc test-application/dev/deployment.yaml | findstr '        image: matteocucchi/test-app:') -replace '        image: matteocucchi/test-app:', '')", returnStdout: true).trim()
-                    env.VERSIONE_NEW = powershell(script:"[string]([double]((gc test-application/dev/deployment.yaml | findstr '        image: matteocucchi/test-app:') -replace '        image: matteocucchi/test-app:', '') + 0.1)", returnStdout: true).trim()
+                    env.VERSIONE_OLD = shell(script:"((gc test-application/dev/deployment.yaml | findstr '        image: matteocucchi/test-app:') -replace '        image: matteocucchi/test-app:', '')", returnStdout: true).trim()
+                    env.VERSIONE_NEW = shell(script:"[string]([double]((gc test-application/dev/deployment.yaml | findstr '        image: matteocucchi/test-app:') -replace '        image: matteocucchi/test-app:', '') + 0.1)", returnStdout: true).trim()
                 }
             }
         }
@@ -55,10 +55,10 @@ pipeline {
             steps{
                 script{                    
                     dir ('test-application') {
-                        powershell "echo ((gc dev/deployment.yaml) -replace '"+VERSIONE_OLD+"', '"+VERSIONE_NEW+"') > dev/deployment.yaml"
-                        powershell "git add ."
-                        powershell "git commit -m '"+env.VERSIONE_OLD+"-->"+env.VERSIONE_NEW+"'"
-                        powershell "git push origin HEAD:main"
+                        shell "echo ((gc dev/deployment.yaml) -replace '"+VERSIONE_OLD+"', '"+VERSIONE_NEW+"') > dev/deployment.yaml"
+                        shell "git add ."
+                        shell "git commit -m '"+env.VERSIONE_OLD+"-->"+env.VERSIONE_NEW+"'"
+                        shell "git push origin HEAD:main"
                     }
                 }
             }
