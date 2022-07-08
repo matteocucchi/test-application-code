@@ -25,7 +25,6 @@ pipeline {
         stage('Get Current Version') {
             steps{
                 script{
-                    sh "yum install -y bc"
                     env.VERSIONE_OLD = sh(script:"grep 'image: matteocucchi/test-app:' test-application/dev/deployment.yaml | sed 's*        image: matteocucchi/test-app:**'", returnStdout: true).trim()
                     env.VERSIONE_NEW = env.VERSIONE_OLD + 0.1
                     sh "echo "+env.VERSIONE_OLD+" "+env.VERSIONE_NEW            
