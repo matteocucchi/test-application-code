@@ -15,7 +15,7 @@ pipeline {
         stage('TEST') { 
             steps { 
                 script{
-                    sh "whoami"
+                    tool docker
                 }
             }
         }
