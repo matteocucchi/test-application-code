@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        docker { image 'centos:centos7' }
-    }
+    agent any
     environment{
         DOCKERHUB_CREDENTIAL=credentials('dockerhub')
     }
