@@ -43,7 +43,7 @@ pipeline {
         stage('Build') { 
             steps { 
                 script{
-                 app = docker.build("test-app")
+                 sh "docker build -t 'test-app' ."
                 }
             }
         }
