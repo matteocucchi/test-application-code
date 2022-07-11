@@ -34,6 +34,8 @@ pipeline {
         stage('CHECK FOR DOCKER') { 
             steps { 
                 script{
+                    def dockerHome = tool 'docker'
+        	        env.PATH = "${dockerHome}/bin:${env.PATH}"
                     sh "ls -la /var/run/"
                 }
             }
@@ -42,8 +44,7 @@ pipeline {
         stage('Build') { 
             steps { 
                 script{
-                    /*def dockerHome = tool 'docker'
-        	        env.PATH = "${dockerHome}/bin:${env.PATH}"*/
+                    
                     docker.build('test-app')
                 }
             }
