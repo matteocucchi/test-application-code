@@ -35,7 +35,7 @@ pipeline {
                 script{
                     def dockerHome = tool 'docker'
         	        env.PATH = "${dockerHome}/bin:${env.PATH}"
-                    sh 'dockerd'
+                    sh 'systemctl enable dockerd --now'
                 }
             }
     	}
