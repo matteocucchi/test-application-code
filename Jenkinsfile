@@ -33,10 +33,9 @@ pipeline {
         stage('Build') { 
             steps { 
                 script{
-                    def dockerHome = tool 'docker'
-        	        env.PATH = "${dockerHome}/bin:${env.PATH}"
+                    /*def dockerHome = tool 'docker'
+        	        env.PATH = "${dockerHome}/bin:${env.PATH}"*/
                     docker.build('test-app')
-                    //sh "docker build -t 'test-app' ."
                 }
             }
         }
