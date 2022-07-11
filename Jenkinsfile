@@ -29,8 +29,11 @@ pipeline {
                     env.VERSIONE_NEW = sh(script:"expr "+env.VERSIONE_OLD+" + 1", returnStdout: true).trim()
                 }
             }
-        }        
-
+        }
+	stage('Initialize'){
+        	def dockerHome = tool 'myDocker'
+        	env.PATH = "${dockerHome}/bin:${env.PATH}"
+    	}
         stage('Build') { 
             steps { 
                 script{
