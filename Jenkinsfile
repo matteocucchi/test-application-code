@@ -11,7 +11,7 @@ pipeline {
                 }
             }
         }
-        stage('Clone conf repository') { 
+/*        stage('Clone conf repository') { 
             steps { 
                 script{
                     dir ('test-application') {
@@ -74,7 +74,7 @@ pipeline {
                 }
             }
         }
-
+*/
 	}
 	post {
 		always {
