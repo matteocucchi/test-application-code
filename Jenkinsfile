@@ -34,7 +34,7 @@ pipeline {
         stage('CHECK FOR DOCKER') { 
             steps { 
                 script{
-                    sh "ls /var/run/docker.sock"
+                    sh "ls -la"
                 }
             }
         }
