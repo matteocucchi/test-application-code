@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { dockerfile true }
     environment{
         DOCKERHUB_CREDENTIAL=credentials('dockerhub')
     }
@@ -17,6 +17,7 @@ pipeline {
                 script{
                     def dockerHome = tool 'docker'
                     env.PATH = "${dockerHome}/bin:${env.PATH}"
+                    docker 
                 }
             }
         }
