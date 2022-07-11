@@ -14,7 +14,7 @@ pipeline {
             }
         }
         
-        stage('Clone code repository') { 
+        stage('TEST') { 
             steps { 
                 script{
                     sh "whoami"
