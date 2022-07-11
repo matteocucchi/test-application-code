@@ -30,18 +30,12 @@ pipeline {
                 }
             }
         }
-	    stage('Initialize'){
-            steps{
-                script{
-                    def dockerHome = tool 'docker'
-        	        env.PATH = "${dockerHome}/bin:${env.PATH}"
-                }
-            }
-    	}
         stage('Build') { 
             steps { 
                 script{
-                 sh "docker build -t 'test-app' ."
+                    def dockerHome = tool 'docker'
+        	        env.PATH = "${dockerHome}/bin:${env.PATH}"
+                    sh "docker build -t 'test-app' ."
                 }
             }
         }
