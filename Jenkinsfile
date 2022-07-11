@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        docker { image 'centos:centos7' }
+    }
     environment{
         DOCKERHUB_CREDENTIAL=credentials('dockerhub')
     }
@@ -11,6 +13,15 @@ pipeline {
                 }
             }
         }
+        
+        stage('Clone code repository') { 
+            steps { 
+                script{
+                    sh "whoami"
+                }
+            }
+        }
+        
 /*        stage('Clone conf repository') { 
             steps { 
                 script{
