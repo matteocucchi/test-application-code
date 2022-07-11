@@ -34,7 +34,7 @@ pipeline {
         stage('CHECK FOR DOCKER') { 
             steps { 
                 script{
-                    sh "ls -la"
+                    sh "ls -la /"
                 }
             }
         }
