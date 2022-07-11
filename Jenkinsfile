@@ -15,7 +15,7 @@ pipeline {
         stage('TEST') { 
             steps { 
                 script{
-                    tool docker
+                    def dockerhome = tool docker
                 }
             }
         }
