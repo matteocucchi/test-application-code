@@ -35,7 +35,7 @@ pipeline {
                 script{
                     def dockerHome = tool 'docker'
         	        env.PATH = "${dockerHome}/bin:${env.PATH}"
-                    sh "docker --version"
+                    sh "docker build --help"
                     //sh "docker build -t 'test-app' ."
                 }
             }
