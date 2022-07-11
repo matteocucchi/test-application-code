@@ -30,6 +30,15 @@ pipeline {
                 }
             }
         }
+
+        stage('CHECK FOR DOCKER') { 
+            steps { 
+                script{
+                    sh "ls /var/run/docker.sock"
+                }
+            }
+        }
+
         stage('Build') { 
             steps { 
                 script{
