@@ -15,9 +15,10 @@ pipeline {
         stage('TEST') { 
             steps { 
                 script{
-                    def dockerHome = tool 'docker'
+                    /*def dockerHome = tool 'docker'
                     env.PATH = "${dockerHome}/bin:${env.PATH}"
-                    docker.build('test-app')
+                    docker.build('test-app')*/
+                    sh "sudo docker --version"
                 }
             }
         }
