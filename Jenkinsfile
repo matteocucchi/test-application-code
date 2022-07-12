@@ -41,14 +41,14 @@ pipeline {
 
         stage('Login') {
 			steps {
-                bat 'docker login -u '+DOCKERHUB_CREDENTIAL_USR+' -p '+DOCKERHUB_CREDENTIAL_PSW               
+                powershell 'docker login -u '+DOCKERHUB_CREDENTIAL_USR+' -p '+DOCKERHUB_CREDENTIAL_PSW               
 			}
 		}
 
 		stage('Push') {
 			steps {
-                bat 'docker tag test-app:latest '+DOCKERHUB_CREDENTIAL_USR+'/test-app:'+VERSIONE_NEW
-				bat 'docker push '+DOCKERHUB_CREDENTIAL_USR+'/test-app:'+VERSIONE_NEW
+                powershell 'docker tag test-app:latest '+DOCKERHUB_CREDENTIAL_USR+'/test-app:'+VERSIONE_NEW
+				powershell 'docker push '+DOCKERHUB_CREDENTIAL_USR+'/test-app:'+VERSIONE_NEW
 			}
 		}
         stage('Version Update'){
@@ -67,7 +67,7 @@ pipeline {
 
 	post {
 		always {
-			bat 'docker logout'
+			powershell 'docker logout'
 		}
 	}
 }
