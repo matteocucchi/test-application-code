@@ -34,8 +34,8 @@ pipeline {
         stage('Build') { 
             steps { 
                 script{
-                    powershell "docker build -t 'test-app' ."
-                    //app = docker.build("test-app")
+                    //powershell "docker build -t 'test-app' ."
+                    app = docker.build("test-app")
                 }
             }
         }
