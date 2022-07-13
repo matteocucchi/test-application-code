@@ -26,9 +26,9 @@ pipeline {
         stage('Get Current Version') {
             steps{
                 script{
-                    OLD = sh(script:"grep 'image: matteocucchi/test-app:' test-application/dev/deployment.yaml | sed 's*        image: matteocucchi/test-app:**'", returnStdout: true).trim()
-                    NEW = sh(script:"echo "+OLD+" + 0.1 | bc", returnStdout: true).trim()
-                    echo "vecchia versione "+OLD+" fine"
+                    env.OLD = sh(script:"grep 'image: matteocucchi/test-app:' test-application/dev/deployment.yaml | sed 's*        image: matteocucchi/test-app:**'", returnStdout: true).trim()
+                    env.NEW = sh(script:"echo "+OLD+" + 0.1 | bc", returnStdout: true).trim()
+                    echo "vecchia versione "+env.OLD+" fine"
                 }
             }
         }
