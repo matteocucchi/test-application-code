@@ -16,8 +16,9 @@ pipeline {
             steps { 
                 script{
                     /*def dockerHome = tool 'docker'
-                    env.PATH = "${dockerHome}/bin:${env.PATH}"*/
-                    docker.build('test-app')
+                    env.PATH = "${dockerHome}/bin:${env.PATH}"
+                    docker.build('test-app')*/
+                    sh "sudo docker build -t test-app ."
                 }
             }
         }
