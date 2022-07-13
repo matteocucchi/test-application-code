@@ -35,8 +35,6 @@ pipeline {
             steps { 
                 script{
                     //powershell "docker build -t 'test-app' ."
-                    def dockerHome = tool 'docker'
-                    env.PATH = "${dockerHome}/bin:${env.PATH}"
                     app = docker.build("test-app")
                 }
             }
