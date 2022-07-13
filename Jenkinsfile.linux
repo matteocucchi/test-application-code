@@ -2,6 +2,10 @@ pipeline {
     agent any
     environment{
         DOCKERHUB_CREDENTIAL=credentials('dockerhub')
+        script{
+                    VERSIONE_OLD = sh(script:"grep 'image: matteocucchi/test-app:' test-application/dev/deployment.yaml | sed 's*        image: matteocucchi/test-app:**'", returnStdout: true).trim()
+                    VERSIONE_NEW = sh(script:"echo "+VERSIONE_OLD+" + 0.1 | bc", returnStdout: true).trim()
+                }
     }
     stages {
         stage('Clone code repository') { 
@@ -26,11 +30,8 @@ pipeline {
         stage('Get Current Version') {
             steps{
                 script{
-                    VERSIONE_OLD = sh(script:"grep 'image: matteocucchi/test-app:' test-application/dev/deployment.yaml | sed 's*        image: matteocucchi/test-app:**'", returnStdout: true).trim()
-                    VERSIONE_NEW = sh(script:"echo "+VERSIONE_OLD+" + 0.1 | bc", returnStdout: true).trim()
                     sh "echo "+VERSIONE_OLD
                     sh "echo "+VERSIONE_NEW
-                    
                 }
             }
         }
