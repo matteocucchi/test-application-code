@@ -34,7 +34,7 @@ pipeline {
                 }
             }
         }
-
+        /*
         stage('Build') { 
             steps { 
                 script{
@@ -55,7 +55,7 @@ pipeline {
 				sh 'docker push '+DOCKERHUB_CREDENTIAL_USR+'/test-app:'+VERSIONE_NEW
 			}
 		}
-        /*
+        
         stage('Version Update'){
             steps{
                 script{                    
