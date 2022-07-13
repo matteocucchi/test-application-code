@@ -32,16 +32,6 @@ pipeline {
             }
         }
 
-        stage('CHECK FOR DOCKER') { 
-            steps { 
-                script{
-                    def dockerHome = tool 'docker'
-        	        env.PATH = "${dockerHome}/bin:${env.PATH}"
-                    sh "ls -la /var/run/"
-                }
-            }
-        }
-
         stage('Build') { 
             steps { 
                 script{
