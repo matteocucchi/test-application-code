@@ -27,7 +27,10 @@ pipeline {
             steps{
                 script{
                     env.VERSIONE_OLD = sh(script:"grep 'image: matteocucchi/test-app:' test-application/dev/deployment.yaml | sed 's*        image: matteocucchi/test-app:**'", returnStdout: true).trim()
-                    env.VERSIONE_NEW = sh(script:"expr "+env.VERSIONE_OLD+" + 1", returnStdout: true).trim()
+                    env.VERSIONE_NEW = sh(script:"echo $(grep 'image: matteocucchi/test-app:' test-application/dev/deployment.yaml | sed 's*        image: matteocucchi/test-app:**') + 0.1 | bc", returnStdout: true).trim()
+                    sh "echo "+env.VERSIONE_OLD
+                    sh "echo "+env.VERSIONE_NEW
+                    
                 }
             }
         }
@@ -52,6 +55,7 @@ pipeline {
 				sh 'docker push '+DOCKERHUB_CREDENTIAL_USR+'/test-app:'+VERSIONE_NEW
 			}
 		}
+        /*
         stage('Version Update'){
             steps{
                 script{                    
@@ -64,7 +68,7 @@ pipeline {
                 }
             }
         }
-
+        */
 	}
 	post {
 		always {
