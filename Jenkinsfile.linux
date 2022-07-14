@@ -60,7 +60,9 @@ pipeline {
                 script{                    
                     dir ('test-application') {
                         sh "sed -i 's*        image: matteocucchi/test-app:$VERSIONE_OLD*        image: matteocucchi/test-app:$VERSIONE_NEW*' dev/deployment.yaml"
-                        sh "git add ."
+                        sh "git config user.name matteocucchi" 
+                        sh "git config user.email matteo.cucchi98@gmail.com"
+			sh "git add ."
                         sh "git commit -m '$VERSIONE_OLD-->$VERSIONE_NEW'"
                         sh "git push origin HEAD:main"
                     }
