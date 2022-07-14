@@ -64,9 +64,7 @@ pipeline {
                         sh "git config --global user.email matteo.cucchi98@gmail.com"
 			sh "git add ."
                         sh "git commit -m '$VERSIONE_OLD-->$VERSIONE_NEW'"
-			sshagent(['githubssh']) {
-  				sh "git push origin HEAD:main"
-			}
+  			sh "git push origin HEAD:main"
                     }
                 }
             }
